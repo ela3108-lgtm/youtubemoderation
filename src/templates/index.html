@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Toxic Comment Moderation</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #111827, #1f2937);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: white;
+        }
+
+        .card {
+            background: #1f2937;
+            padding: 30px;
+            border-radius: 12px;
+            width: 750px;
+            box-shadow: 0px 10px 30px rgba(0,0,0,0.4);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            resize: none;
+            font-size: 14px;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 12px;
+            width: 100%;
+            border: none;
+            border-radius: 8px;
+            background: #3b82f6;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #2563eb;
+        }
+
+        .result {
+            margin-top: 20px;
+            background: #111827;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .delete { color: #ef4444; font-weight: bold; }
+        .flag { color: #f59e0b; font-weight: bold; }
+        .allow { color: #10b981; font-weight: bold; }
+
+        .bar-container {
+            background: #374151;
+            border-radius: 5px;
+            height: 10px;
+            margin-bottom: 10px;
+        }
+
+        .bar {
+            height: 10px;
+            border-radius: 5px;
+        }
+
+        .nav {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .nav a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+
+        .nav a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <h2>AI Toxic Comment Moderation System</h2>
+
+    <form action="/analyze" method="POST">
+        <textarea name="text" placeholder="Enter social media comment here..." required></textarea>
+        <button type="submit">Analyze Comment</button>
+    </form>
+
+    {% if result %}
+    <div class="result">
+
+        <h3>
+            Moderation Decision:
+            <span class="{% if result.decision == 'Auto Delete' %}delete
+                          {% elif result.decision == 'Flag for Review' %}flag
+                          {% else %}allow{% endif %}">
+                {{ result.decision }}
+            </span>
+        </h3>
+
+        <h4>Toxicity Scores:</h4>
+
+        {% for label, score in result.scores.items() %}
+            <p>{{ label }} : {{ "%.3f"|format(score) }}</p>
+
+            <div class="bar-container">
+                <div class="bar"
+                     style="width: {{ score*100 }}%;
+                            background:
+                                {% if score > 0.7 %}
+                                    #ef4444
+                                {% elif score > 0.4 %}
+                                    #f59e0b
+                                {% else %}
+                                    #10b981
+                                {% endif %};">
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+    {% endif %}
+
+    <div class="nav">
+        <a href="/dashboard">View Moderation Dashboard</a>
+    </div>
+
+</div>
+
+</body>
+</html>

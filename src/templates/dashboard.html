@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Moderation Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #111827;
+            color: white;
+            padding: 40px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #1f2937;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background: #374151;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #374151;
+        }
+
+        tr:hover {
+            background: #2d3748;
+        }
+
+        .delete { color: #ef4444; font-weight: bold; }
+        .flag { color: #f59e0b; font-weight: bold; }
+        .allow { color: #10b981; font-weight: bold; }
+
+        a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .back {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Moderation Dashboard</h2>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Comment</th>
+        <th>Decision</th>
+    </tr>
+
+    {% for comment in comments %}
+    <tr>
+        <td>{{ comment[0] }}</td>
+        <td>{{ comment[1] }}</td>
+        <td class="{% if comment[2] == 'Auto Delete' %}delete
+                   {% elif comment[2] == 'Flag for Review' %}flag
+                   {% else %}allow{% endif %}">
+            {{ comment[2] }}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<div class="back">
+    <a href="/">← Back to Moderation</a>
+</div>
+
+</body>
+</html>

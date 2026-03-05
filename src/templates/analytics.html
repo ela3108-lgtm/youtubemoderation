@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Toxicity Analytics Dashboard</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Custom JS -->
+    <script src="/static/js/charts.js" defer></script>
+
+    <style>
+        .glass {
+            backdrop-filter: blur(14px);
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white min-h-screen p-6">
+
+    <h1 class="text-4xl font-bold mb-8 text-center">
+        Toxicity Analytics Dashboard
+    </h1>
+
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+
+        <!-- Total Comments -->
+        <div class="glass p-6 rounded-2xl shadow-xl">
+            <h2 class="text-xl mb-2"><i class="ri-chat-1-fill text-blue-400"></i> Total Comments</h2>
+            <p id="totalComments" class="text-4xl font-bold"></p>
+        </div>
+
+        <!-- Toxic Ratio -->
+        <div class="glass p-6 rounded-2xl shadow-xl">
+            <h2 class="text-xl mb-2"><i class="ri-flashlight-fill text-red-400"></i> Toxicity Ratio</h2>
+            <p id="toxicityRatio" class="text-4xl font-bold"></p>
+        </div>
+
+        <!-- Spike Detection -->
+        <div class="glass p-6 rounded-2xl shadow-xl">
+            <h2 class="text-xl mb-2"><i class="ri-line-chart-fill text-yellow-400"></i> Spike</h2>
+            <p id="spikeInfo" class="text-3xl font-semibold"></p>
+        </div>
+    </div>
+
+    <!-- Big Charts -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+
+        <div class="glass p-6 rounded-2xl">
+            <h2 class="text-2xl mb-4">Hourly Toxicity Trend</h2>
+            <canvas id="trendChart"></canvas>
+        </div>
+
+        <div class="glass p-6 rounded-2xl">
+            <h2 class="text-2xl mb-4">Toxicity Distribution</h2>
+            <canvas id="distChart"></canvas>
+        </div>
+
+    </div>
+
+    <!-- Bottom Row -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+        <div class="glass p-6 rounded-2xl">
+            <h2 class="text-2xl mb-4">Top Toxic Words</h2>
+            <ul id="wordList" class="space-y-2 text-lg"></ul>
+        </div>
+
+        <div class="glass p-6 rounded-2xl">
+            <h2 class="text-2xl mb-4">Recent Comments</h2>
+            <ul id="recentComments" class="space-y-3 text-sm"></ul>
+        </div>
+
+    </div>
+
+</body>
+</html>
